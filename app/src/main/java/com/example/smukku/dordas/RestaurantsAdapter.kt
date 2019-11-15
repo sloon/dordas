@@ -20,7 +20,7 @@ class RestaurantsAdapter(
     override fun getItemCount() = list.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        RestaurantViewHolder.create(parent)
+        RestaurantViewHolder.create(parent, viewModel)
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
         holder.bind(list[position])

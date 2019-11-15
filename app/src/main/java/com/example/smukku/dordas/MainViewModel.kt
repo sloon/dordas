@@ -1,6 +1,7 @@
 package com.example.smukku.dordas
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel (application: Application) : AndroidViewModel(application) {
 
     @Inject
     lateinit var restaurantsRepository: RestaurantsRepository
@@ -37,4 +38,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
+    fun saveFavourite(context: Context, id: Int, favourite: Boolean) {
+        restaurantsRepository.saveFavoriteStatus(context, id, favourite)
+    }
+
+    fun checkFavourite(context: Context, id: Int) = restaurantsRepository.checkFavourite(context, id)
+
 }

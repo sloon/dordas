@@ -1,11 +1,14 @@
 package com.example.smukku.dordas
 
+import android.content.Context
+import android.preference.PreferenceManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 import javax.inject.Inject
 
 class RestaurantsRepository @Inject constructor(val doordashApi: DoordashApi) {
+
+    val favouriteKey = "favourite_"
 
     //Not handling errors for now, running short of time
     suspend fun getRestaurants(
@@ -20,4 +23,18 @@ class RestaurantsRepository @Inject constructor(val doordashApi: DoordashApi) {
             }
         }
     }
+
+    fun saveFavoriteStatus(context: Context, id: Int, favourite: Boolean) {
+        // I would usually get the preferences injected, but to save time, just writing the code here.
+        PreferenceManager.getDefaultSharedPreferences(context)
+            .edit()
+            .putBoolean("$favouriteKey$id", favourite)
+            .apply()
+    }
+
+    fun checkFavourite(context: Context, id: Int): Boolean {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+            .getBoolean("$favouriteKey$id", false)
+    }
+
 }
